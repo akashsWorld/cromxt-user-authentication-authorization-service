@@ -1,4 +1,4 @@
-package com.cromxt.auth_service;
+package com.cromxt.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
