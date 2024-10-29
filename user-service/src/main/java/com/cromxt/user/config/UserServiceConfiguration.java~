@@ -9,9 +9,10 @@ import org.springframework.format.datetime.DateFormatter;
 @Configuration
 public class UserServiceConfiguration {
 
+
+//    TODO: use formatter to format the date.
     @Bean
     public DateFormatter dateFormatter(){
-        //    TODO: use formatter to format the date.
         DateFormatter dateFormatter =  new DateFormatter("dd/MM/yyyy");
         dateFormatter.setIso(DateTimeFormat.ISO.DATE);
         return dateFormatter;

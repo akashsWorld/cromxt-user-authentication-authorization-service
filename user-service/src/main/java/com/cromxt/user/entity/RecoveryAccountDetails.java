@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecoveryDetails {
+public class RecoveryAccountDetails {
     @Id
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id")

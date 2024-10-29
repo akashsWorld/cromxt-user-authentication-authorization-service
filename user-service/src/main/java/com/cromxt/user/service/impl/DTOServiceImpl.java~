@@ -7,7 +7,6 @@ import com.cromxt.user.dtos.requests.UpdateUserDTO;
 import com.cromxt.user.entity.Gender;
 import com.cromxt.user.entity.RecoveryAccountDetails;
 import com.cromxt.user.entity.UserEntity;
-import com.cromxt.user.exceptions.InvalidRecoveryDetailsException;
 import com.cromxt.user.service.DTOService;
 import org.springframework.stereotype.Service;
 
@@ -55,13 +54,6 @@ public class DTOServiceImpl implements DTOService {
 
     @Override
     public RecoveryAccountDetails getRecoveryAccountDetails(RecoveryAccountDetailsDTO recoveryAccountDetailsDTO) {
-
-        if(recoveryAccountDetailsDTO == null ||
-                (recoveryAccountDetailsDTO.recoveryEmail() == null &&
-                        recoveryAccountDetailsDTO.phoneNumberDTO() == null)){
-            throw new InvalidRecoveryDetailsException("Invalid recovery details");
-        }
-
         PhoneNumberDTO phoneNumberDTO = recoveryAccountDetailsDTO.phoneNumberDTO();
 
         return RecoveryAccountDetails.builder()
