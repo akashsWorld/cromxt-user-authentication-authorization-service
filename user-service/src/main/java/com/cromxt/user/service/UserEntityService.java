@@ -1,9 +1,11 @@
 package com.cromxt.user.service;
 
-import com.cromxt.user.dtos.RegisterUser;
+import com.cromxt.user.dtos.UserDetailDTO;
 
 public interface UserEntityService {
 
 
-    void saveUser(RegisterUser registerUser);
+    void saveUser(UserDetailDTO registerUser);
+
+    void updateUser(UserDetailDTO userDetail);
 }

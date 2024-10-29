@@ -18,6 +18,7 @@ import java.util.Set;
 @Setter
 @Builder
 @EqualsAndHashCode
+@ToString
 public class UserEntity {
 
     @Id
@@ -35,9 +36,9 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @Column(nullable = false,updatable = false)
-    private Date birthday;
-    @OneToMany(mappedBy = "user")
-    private Set<Token> token;
+    private Date birthdate;
+//    @OneToMany(mappedBy = "user")
+//    private Set<Token> token;
     @CreationTimestamp
     @Column(nullable = false,name = "created_on",updatable = false)
     private Timestamp createdOn;

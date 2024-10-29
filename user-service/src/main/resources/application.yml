@@ -5,7 +5,6 @@ USER_SERVICE:
   DATABASE_PORT: "${DATABASE_PORT:5432}"
   DATABASE: "${DATABASE_NAME:postgres}"
   SERVER_PORT: "${SERVER_PORT:9532}"
-  HOST_NAME: "${HOST_NAME:croxmail}"
 server:
   port: "${USER_SERVICE.SERVER_PORT}"
 spring:
@@ -21,4 +20,4 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
