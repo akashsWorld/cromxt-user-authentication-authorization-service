@@ -4,17 +4,26 @@ import com.cromxt.user.dtos.requests.PhoneNumberDTO;
 import com.cromxt.user.dtos.requests.RecoveryAccountDetailsDTO;
 import com.cromxt.user.dtos.requests.RegisterUserDTO;
 import com.cromxt.user.dtos.requests.UpdateUserDTO;
-import com.cromxt.user.entity.Gender;
-import com.cromxt.user.entity.RecoveryAccountDetails;
-import com.cromxt.user.entity.UserEntity;
+import com.cromxt.user.entity.*;
 import com.cromxt.user.exceptions.InvalidRecoveryDetailsException;
 import com.cromxt.user.service.DTOService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class DTOServiceImpl implements DTOService {
+
+    private static final Map<String, Gender> ALLOWED_GENDERS = Arrays.stream(Gender.values()).collect(Collectors.toMap(
+            Gender::getGender,gender-> Gender.valueOf(gender.name())
+    ));
+    private static final Map<String, CountryCode> ALLOWED_COUNTRY_CODE = Arrays.stream(CountryCode.values()).collect(Collectors.toMap(
+            CountryCode::getCode,country->CountryCode.valueOf(country.name())
+    ));
 
     @Override
     public UserEntity getUserEntity(RegisterUserDTO registerUser) {
@@ -23,7 +32,7 @@ public class DTOServiceImpl implements DTOService {
                 .password(registerUser.password())
                 .firstName(registerUser.firstName())
                 .lastName(registerUser.lastName())
-                .gender(registerUser.gender().equalsIgnoreCase("Male") ? Gender.MALE : Gender.FEMALE)
+                .gender(ALLOWED_GENDERS.get(registerUser.gender().toUpperCase()))
                 .birthdate(Date.valueOf(registerUser.birthDate()))
                 .build();
     }
@@ -44,7 +53,10 @@ public class DTOServiceImpl implements DTOService {
 
         value = updateUserDTO.gender();
         if(value != null && !value.isEmpty()){
-            userEntity.setGender(updateUserDTO.gender().equalsIgnoreCase("Male") ? Gender.MALE : Gender.FEMALE);
+            if(!ALLOWED_GENDERS.containsKey(value.toUpperCase())){
+                throw new IllegalArgumentException("Invalid gender");
+            }
+            userEntity.setGender(ALLOWED_GENDERS.get(value));
         }
 
         value = updateUserDTO.birthDate();
@@ -58,17 +70,48 @@ public class DTOServiceImpl implements DTOService {
 
         if(recoveryAccountDetailsDTO == null ||
                 (recoveryAccountDetailsDTO.recoveryEmail() == null &&
-                        recoveryAccountDetailsDTO.phoneNumberDTO() == null)){
+                        recoveryAccountDetailsDTO.phoneNumber() == null)){
             throw new InvalidRecoveryDetailsException("Invalid recovery details");
         }
 
-        PhoneNumberDTO phoneNumberDTO = recoveryAccountDetailsDTO.phoneNumberDTO();
+        final RecoveryAccountDetails recoveryAccountDetails = RecoveryAccountDetails.builder().build() ;
 
-        return RecoveryAccountDetails.builder()
-                .country(phoneNumberDTO.countryCode())
-                .phoneNumber(phoneNumberDTO.phoneNumber())
-                .recoveryEmail(recoveryAccountDetailsDTO.recoveryEmail())
+        PhoneNumberDTO phoneNumberDTO = recoveryAccountDetailsDTO.phoneNumber();
+
+        if(phoneNumberDTO != null){
+            recoveryAccountDetails.setCountry(ALLOWED_COUNTRY_CODE.get(phoneNumberDTO.countryCode()));
+            recoveryAccountDetails.setPhoneNumber(phoneNumberDTO.phoneNumber());
+        }
+        if(recoveryAccountDetailsDTO.recoveryEmail() != null){
+            recoveryAccountDetails.setRecoveryEmail(recoveryAccountDetailsDTO.recoveryEmail());
+        }
+
+        return recoveryAccountDetails;
+    }
+
+    @Override
+    public ProfileAvatar getProfileAvatar(MultipartFile profileImage, String url) {
+        return ProfileAvatar.builder()
+                .url(url)
+                .format(profileImage.getContentType())
+                .imgSize(String.valueOf(profileImage.getSize()))
                 .build();
+    }
+
+    @Override
+    public void recoveryAccountDetails(RecoveryAccountDetails recoveryAccountDetails, RecoveryAccountDetailsDTO recoveryAccountDetailsDTO) {
+        if(recoveryAccountDetailsDTO.recoveryEmail() != null){
+            recoveryAccountDetails.setRecoveryEmail(recoveryAccountDetailsDTO.recoveryEmail());
+        }else {
+            recoveryAccountDetails.setRecoveryEmail(null);
+        }
+        if(recoveryAccountDetailsDTO.phoneNumber() != null){
+            recoveryAccountDetails.setCountry(ALLOWED_COUNTRY_CODE.get(recoveryAccountDetailsDTO.phoneNumber().countryCode()));
+            recoveryAccountDetails.setPhoneNumber(recoveryAccountDetailsDTO.phoneNumber().phoneNumber());
+        }else {
+            recoveryAccountDetails.setCountry(null);
+            recoveryAccountDetails.setPhoneNumber(null);
+        }
     }
 
 }

@@ -22,7 +22,7 @@ public record RegisterUserDTO(
         String lastName,
         @NotBlank
         String gender,
-        @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}")
+        @Pattern(regexp = "yyyy-MM-dd")
         String birthDate,
         @Valid
         RecoveryAccountDetailsDTO recoveryAccountDetails

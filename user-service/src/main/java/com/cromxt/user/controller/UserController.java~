@@ -30,7 +30,7 @@ public record UserController(
 
     @PutMapping(value = "/{email}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUser(@Valid @PathVariable String email, @RequestBody @Validated UpdateUserDTO updateUserDTO) {
+    public void updateUser(@Valid @PathVariable @Email String email, @RequestBody @Validated UpdateUserDTO updateUserDTO) {
         userDetailService.updateUser(email,updateUserDTO);
     }
 

@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserDetailService{
                 .orElseThrow(() -> new UserNotFoundException("User with email: " + email + " not found"));
         dtoService.updateUser(userEntity,updateUserDTO);
         RecoveryAccountDetailsDTO recoveryAccountDetailsDTO = updateUserDTO.recoveryAccountDetails();
-//
+//     
         if(recoveryAccountDetailsDTO!=null){
             recoveryAccountDetailsRepository.findById(userEntity.getId()).ifPresent(
                     recoveryAccountDetails ->{
