@@ -1,9 +1,6 @@
 package com.cromxt.user.service;
 
-import com.cromxt.user.dtos.requests.EmailDetailDTO;
-import com.cromxt.user.dtos.requests.PasswordDetailsDTO;
-import com.cromxt.user.dtos.requests.RegisterUserDTO;
-import com.cromxt.user.dtos.requests.UpdateUserDTO;
+import com.cromxt.user.dtos.requests.*;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserDetailService {
@@ -11,15 +8,15 @@ public interface UserDetailService {
 
     void saveUser(RegisterUserDTO registerUser);
 
-    void updateUser(String email, UpdateUserDTO updateUserDTO);
+    void updateUser(String username, UpdateUserDTO updateUserDTO);
 
-    void updateEmail(String email, EmailDetailDTO newEmail);
+    void updateEmail(String username, UsernameDetailDTO newEmail);
 
-    void updatePassword(String email, PasswordDetailsDTO passwordDetails);
+    void updatePassword(String username, PasswordDetailsDTO passwordDetails);
 
-    void updateProfileImage(String email, MultipartFile profileImage);
+    void updateProfileImage(String username, MultipartFile profileImage);
 
-    void deleteProfileAvatar(String email);
+    void deleteProfileAvatar(String username);
 
-    Boolean isEmailValid(String email);
+    Boolean isValidUsername(String username);
 }

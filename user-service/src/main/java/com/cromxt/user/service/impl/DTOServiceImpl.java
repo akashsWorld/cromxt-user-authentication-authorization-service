@@ -7,6 +7,8 @@ import com.cromxt.user.dtos.requests.UpdateUserDTO;
 import com.cromxt.user.entity.*;
 import com.cromxt.user.exceptions.InvalidRecoveryDetailsException;
 import com.cromxt.user.service.DTOService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +18,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class DTOServiceImpl implements DTOService {
+    private final PasswordEncoder passwordEncoder;
 
     private static final Map<String, Gender> ALLOWED_GENDERS = Arrays.stream(Gender.values()).collect(Collectors.toMap(
             Gender::getGender,gender-> Gender.valueOf(gender.name())
@@ -28,8 +32,8 @@ public class DTOServiceImpl implements DTOService {
     @Override
     public UserEntity getUserEntity(RegisterUserDTO registerUser) {
         return UserEntity.builder()
-                .username(registerUser.email())
-                .password(registerUser.password())
+                .username(registerUser.username())
+                .password(passwordEncoder.encode(registerUser.password()))
                 .firstName(registerUser.firstName())
                 .lastName(registerUser.lastName())
                 .gender(ALLOWED_GENDERS.get(registerUser.gender().toUpperCase()))

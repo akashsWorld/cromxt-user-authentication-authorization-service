@@ -35,7 +35,7 @@ public record UserFormDetailsController(
     }
 
     @GetMapping(value = "/validate/{email}")
-    public ResponseEntity<Boolean> isEmailValid(@PathVariable String email) {
-        return ResponseEntity.ok(userDetailService.isEmailValid(email));
+    public ResponseEntity<Boolean> isUsernameValid(@PathVariable String email) {
+        return ResponseEntity.ok(userDetailService.isValidUsername(email));
     }
 }

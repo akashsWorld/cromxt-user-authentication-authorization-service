@@ -1,14 +1,11 @@
 package com.cromxt.user.controller;
 
 
-import com.cromxt.user.dtos.requests.EmailDetailDTO;
 import com.cromxt.user.dtos.requests.PasswordDetailsDTO;
-import com.cromxt.user.dtos.requests.RegisterUserDTO;
 import com.cromxt.user.dtos.requests.UpdateUserDTO;
+import com.cromxt.user.dtos.requests.UsernameDetailDTO;
 import com.cromxt.user.service.UserDetailService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -17,45 +14,40 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-@RequestMapping(value = "/cromxt/users")
+@RequestMapping(value = "/users/cromxt/secure")
 public record UserController(
         UserDetailService userDetailService
 ) {
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void registerUser(@RequestBody @Validated RegisterUserDTO userDetail) {
-        userDetailService.saveUser(userDetail);
-    }
-
-    @PutMapping(value = "/{email}")
+    @PutMapping(value = "/{username}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUser(@Valid @PathVariable String email, @RequestBody @Validated UpdateUserDTO updateUserDTO) {
-        userDetailService.updateUser(email,updateUserDTO);
+    public void updateUser(@Valid @PathVariable String username, @RequestBody @Validated UpdateUserDTO updateUserDTO) {
+        userDetailService.updateUser(username,updateUserDTO);
     }
 
-    @PatchMapping("/email/{email}")
+    @PatchMapping("/username/{username}")
     @ResponseStatus(value =HttpStatus.NO_CONTENT)
-    public void updateEmail(@PathVariable String email, @RequestBody EmailDetailDTO newEmail) {
-        userDetailService.updateEmail(email,newEmail);
+    public void updateUsername(@PathVariable String username, @RequestBody UsernameDetailDTO usernameDetailDTO) {
+        userDetailService.updateEmail(username,usernameDetailDTO);
     }
 
-    @PatchMapping("/password/{email}")
+    @PutMapping("/password/{username}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePassword(@PathVariable String email, @RequestBody PasswordDetailsDTO passwordDetails) {
-        userDetailService.updatePassword(email,passwordDetails);
+    public void updatePassword(@PathVariable String username, @RequestBody PasswordDetailsDTO passwordDetails) {
+        userDetailService.updatePassword(username,passwordDetails);
     }
 
-    @PostMapping(value = "/image/update/{email}", consumes = "multipart/form-data")
+    @PutMapping(value = "/image/{username}", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateImage(@PathVariable String email, @RequestParam(name = "profileImage") MultipartFile profileImage) {
-        userDetailService.updateProfileImage(email,profileImage);
+    public void updateImage(@PathVariable String username, @RequestParam(name = "profileImage") MultipartFile profileImage) {
+        userDetailService.updateProfileImage(username,profileImage);
     }
 
-    @DeleteMapping(value = "/image/delete/{email}")
-    public void deleteProfileAvatar(@PathVariable String email) {
-        userDetailService.deleteProfileAvatar(email);
+    @DeleteMapping(value = "/image/{username}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProfileAvatar(@PathVariable String username) {
+        System.out.println("Hello");
+        userDetailService.deleteProfileAvatar(username);
     }
-
 
 }
