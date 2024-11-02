@@ -10,7 +10,7 @@ import com.cromxt.user.repository.RecoveryAccountDetailsRepository;
 import com.cromxt.user.repository.UserEntityRepository;
 import com.cromxt.user.service.DTOService;
 import com.cromxt.user.service.StorageService;
-import com.cromxt.user.service.UserDetailService;
+import com.cromxt.user.service.UserEntityService;
 import com.cromxt.user.service.UtilService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserDetailService{
+public class UserServiceImpl implements UserEntityService {
 
     private static final List<String> ALLOWED_FILE_EXTENSIONS = Arrays.asList("image/png", "image/jpg", "image/jpeg");
     private static final String USERNAME_PATTERN = "^[a-zA-Z0-9_]{3,16}$";

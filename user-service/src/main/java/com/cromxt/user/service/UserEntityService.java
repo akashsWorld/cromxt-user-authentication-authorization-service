@@ -3,7 +3,7 @@ package com.cromxt.user.service;
 import com.cromxt.user.dtos.requests.*;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface UserDetailService {
+public interface UserEntityService {
 
 
     void saveUser(RegisterUserDTO registerUser);

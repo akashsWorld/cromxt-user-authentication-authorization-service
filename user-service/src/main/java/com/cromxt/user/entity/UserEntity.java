@@ -5,9 +5,13 @@ import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,7 +23,7 @@ import java.util.Set;
 @Builder
 @EqualsAndHashCode
 @ToString
-public class UserEntity {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,6 +40,8 @@ public class UserEntity {
     private Gender gender;
     @Column(nullable = false,updatable = false)
     private Date birthdate;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 //    @OneToMany(mappedBy = "user")
 //    private Set<Token> token;
     @CreationTimestamp
@@ -50,4 +56,39 @@ public class UserEntity {
 
     @OneToOne(mappedBy = "user",cascade = CascadeType.REMOVE)
     private ProfileAvatar profileAvatar;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

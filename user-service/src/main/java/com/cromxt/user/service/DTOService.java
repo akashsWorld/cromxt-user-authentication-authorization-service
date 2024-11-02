@@ -15,6 +15,5 @@ public interface DTOService {
     void updateUser(UserEntity userEntity, UpdateUserDTO updateUserDTO);
     RecoveryAccountDetails getRecoveryAccountDetails(RecoveryAccountDetailsDTO recoveryAccountDetailsDTO);
     ProfileAvatar getProfileAvatar(MultipartFile profileImage, String url);
-
     void recoveryAccountDetails(RecoveryAccountDetails recoveryAccountDetails, RecoveryAccountDetailsDTO recoveryAccountDetailsDTO);
 }

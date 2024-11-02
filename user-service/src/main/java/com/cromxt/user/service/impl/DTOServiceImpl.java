@@ -36,6 +36,7 @@ public class DTOServiceImpl implements DTOService {
                 .password(passwordEncoder.encode(registerUser.password()))
                 .firstName(registerUser.firstName())
                 .lastName(registerUser.lastName())
+                .role(Role.USER)
                 .gender(ALLOWED_GENDERS.get(registerUser.gender().toUpperCase()))
                 .birthdate(Date.valueOf(registerUser.birthDate()))
                 .build();

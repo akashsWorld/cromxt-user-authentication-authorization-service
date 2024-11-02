@@ -7,3 +7,8 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
+  cache:
+    image: redis:7.4.1-alpine
+    container_name: redis-cache
+    ports:
+      - "6379:6379"

@@ -3,7 +3,7 @@ package com.cromxt.user.controller;
 
 import com.cromxt.user.entity.CountryCode;
 import com.cromxt.user.entity.Gender;
-import com.cromxt.user.service.UserDetailService;
+import com.cromxt.user.service.UserEntityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/form/values")
 public record UserFormDetailsController(
-        UserDetailService userDetailService
+        UserEntityService userEntityService
 ) {
 
     @GetMapping(value = "/countries")
@@ -36,6 +36,6 @@ public record UserFormDetailsController(
 
     @GetMapping(value = "/validate/{email}")
     public ResponseEntity<Boolean> isUsernameValid(@PathVariable String email) {
-        return ResponseEntity.ok(userDetailService.isValidUsername(email));
+        return ResponseEntity.ok(userEntityService.isValidUsername(email));
     }
 }
