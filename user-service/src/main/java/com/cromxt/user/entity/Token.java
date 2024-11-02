@@ -4,6 +4,9 @@ package com.cromxt.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Entity
 @Table(name = "token")
 @AllArgsConstructor
@@ -11,7 +14,9 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class Token {
+public class Token implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 19271600237443477L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

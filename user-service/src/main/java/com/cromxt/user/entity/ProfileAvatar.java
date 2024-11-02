@@ -3,6 +3,9 @@ package com.cromxt.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Entity
 @Table(name = "avatar")
 @AllArgsConstructor
@@ -10,7 +13,9 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class ProfileAvatar {
+public class ProfileAvatar implements Serializable{
+    @Serial
+    private static final long serialVersionUID = 29675678654762172L;
 
     @Id
     @Column(name = "cuser_id")

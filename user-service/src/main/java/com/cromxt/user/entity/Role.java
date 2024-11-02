@@ -8,14 +8,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 //TODO remove the annotation
-@NoArgsConstructor
+
 public enum Role {
 //    TODO: Implement the permissions for each role.
-    ADMIN,
-    MANAGER,
-    USER;
+    ADMIN(Set.of()),
+    MANAGER(Set.of()),
+    USER(Set.of());
 
-    private Set<Permission> permissions;
+    private final Set<Permission> permissions;
 
     private Role(Set<Permission> permissions) {
         this.permissions = permissions;

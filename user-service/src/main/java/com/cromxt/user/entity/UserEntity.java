@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -23,7 +25,10 @@ import java.util.Set;
 @Builder
 @EqualsAndHashCode
 @ToString
-public class UserEntity implements UserDetails {
+public class UserEntity implements UserDetails , Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 274678156711667162L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -59,7 +64,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return role.getAuthorities();
     }
 
     @Override

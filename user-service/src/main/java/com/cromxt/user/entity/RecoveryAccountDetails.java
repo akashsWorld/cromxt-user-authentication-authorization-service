@@ -3,6 +3,7 @@ package com.cromxt.user.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
@@ -12,7 +13,9 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecoveryAccountDetails  {
+public class RecoveryAccountDetails implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 3226859728349059884L;
     @Id
     @Column(name="cuser_id")
     private String id;

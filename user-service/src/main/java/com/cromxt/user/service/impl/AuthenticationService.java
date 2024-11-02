@@ -21,13 +21,14 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
 
     public AuthenticationResponseDTO authenticate(LoginUserDTO request) {
-//        TODO: i dont understand why authenticationManager written here?
-//        authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        request.username(),
-//                        request.password()
-//                )
-//        );
+//        AuthenticationManager done all the work for us and validate the credentials and fetch the data from database validate the password.
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.username(),
+                        request.password()
+                )
+        );
+
         var user = userEntityRepository.findByUsername(request.username())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
