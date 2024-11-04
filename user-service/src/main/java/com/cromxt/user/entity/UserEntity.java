@@ -47,8 +47,6 @@ public class UserEntity implements UserDetails , Serializable {
     private Date birthdate;
     @Enumerated(EnumType.STRING)
     private Role role;
-//    @OneToMany(mappedBy = "user")
-//    private Set<Token> token;
     @CreationTimestamp
     @Column(nullable = false,name = "created_on",updatable = false)
     private Timestamp createdOn;

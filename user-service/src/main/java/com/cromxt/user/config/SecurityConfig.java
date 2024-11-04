@@ -19,7 +19,8 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private static final String[] WHITE_LIST_URL = {
-            "/users/cromxt/auth/**",
+            "/auth/**",
+            "/form/values/**"
 //            "/**" /* Remove this on the production. */
     };
     private final AuthenticationProvider authenticationProvider;
@@ -32,7 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         requestMatchersRegistry->
                                 requestMatchersRegistry
-                                .requestMatchers(POST,WHITE_LIST_URL).permitAll()
+                                .requestMatchers(WHITE_LIST_URL).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

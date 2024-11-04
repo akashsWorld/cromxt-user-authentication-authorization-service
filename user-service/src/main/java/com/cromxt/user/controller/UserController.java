@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-@RequestMapping(value = "/users/cromxt/secure")
+@RequestMapping(value = "/secure")
 public record UserController(
         UserEntityService userEntityService
 ) {
