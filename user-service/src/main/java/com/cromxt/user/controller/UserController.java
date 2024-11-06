@@ -46,7 +46,6 @@ public record UserController(
     @DeleteMapping(value = "/image/{username}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProfileAvatar(@PathVariable String username) {
-        System.out.println("Hello");
         userEntityService.deleteProfileAvatar(username);
     }
 

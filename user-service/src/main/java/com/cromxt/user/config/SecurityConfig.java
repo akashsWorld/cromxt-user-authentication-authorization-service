@@ -20,7 +20,8 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 public class SecurityConfig {
     private static final String[] WHITE_LIST_URL = {
             "/auth/**",
-            "/form/values/**"
+            "/form/values/**",
+            "/validate"
 //            "/**" /* Remove this on the production. */
     };
     private final AuthenticationProvider authenticationProvider;

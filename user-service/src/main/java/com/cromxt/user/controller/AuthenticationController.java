@@ -3,7 +3,7 @@ package com.cromxt.user.controller;
 import com.cromxt.user.dtos.requests.LoginUserDTO;
 import com.cromxt.user.dtos.requests.RegisterUserDTO;
 import com.cromxt.user.dtos.responses.AuthenticationResponseDTO;
-import com.cromxt.user.service.impl.AuthenticationService;
+import com.cromxt.user.service.AuthenticationService;
 import com.cromxt.user.service.UserEntityService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
