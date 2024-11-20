@@ -4,7 +4,6 @@ package com.cromxt.user.config;
 import com.cromxt.user.exceptions.UserNotFoundException;
 import com.cromxt.user.repository.UserEntityRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,9 +25,7 @@ public class UserServiceConfiguration {
     public UserDetailsService userDetailsService(){
         return new UserDetailsService() {
             @Override
-            @Cacheable(value = "user", key = "#username")
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                System.out.println("The data is looking into database...");
                 return userEntityRepository.findByUsername(username).orElseThrow(
                         () -> new UserNotFoundException("User not found with username: " + username)
                 );

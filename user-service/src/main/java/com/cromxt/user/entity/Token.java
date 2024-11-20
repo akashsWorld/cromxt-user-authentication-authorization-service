@@ -23,9 +23,7 @@ public class Token implements Serializable {
     private String id;
     @Column(unique = true, nullable = false)
     private String token;
-
     public Boolean revoked;
-
     public Boolean expired;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cuser_id")

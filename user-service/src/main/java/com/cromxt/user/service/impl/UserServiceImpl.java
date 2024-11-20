@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserEntityService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "user",key = "#username")
     public void updateUser(String username, UpdateUserDTO updateUserDTO) {
         UserEntity userEntity = userEntityRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
@@ -72,7 +71,6 @@ public class UserServiceImpl implements UserEntityService {
     }
 
     @Override
-    @CacheEvict(value = "user",key = "#username")
     public void updateEmail(String username, UsernameDetailDTO usernameDetailDTO) {
         UserEntity userEntity = userEntityRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
@@ -81,7 +79,6 @@ public class UserServiceImpl implements UserEntityService {
     }
 
     @Override
-    @CacheEvict(value = "user",key = "#username")
     public void updatePassword(String username, PasswordDetailsDTO passwordDetails) {
         UserEntity userEntity = userEntityRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
@@ -97,7 +94,6 @@ public class UserServiceImpl implements UserEntityService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "user",key = "#username")
     public void updateProfileImage(String username, MultipartFile profileImage) {
         if(!ALLOWED_FILE_EXTENSIONS.contains(profileImage.getContentType())){
             throw new ImageTypeNotValidException("Invalid image type: " + profileImage.getContentType());
@@ -120,7 +116,6 @@ public class UserServiceImpl implements UserEntityService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "user",key = "#username")
     public void deleteProfileAvatar(String username) {
         userEntityRepository.findByUsername(username).ifPresentOrElse(
                 user -> {

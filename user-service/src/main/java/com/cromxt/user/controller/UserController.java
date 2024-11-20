@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
-@RequestMapping(value = "/secure")
+@RequestMapping(value = "/users")
 public record UserController(
         UserEntityService userEntityService
 ) {
@@ -26,7 +26,7 @@ public record UserController(
     }
 
     @PatchMapping("/username/{username}")
-    @ResponseStatus(value =HttpStatus.NO_CONTENT)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void updateUsername(@PathVariable String username, @RequestBody UsernameDetailDTO usernameDetailDTO) {
         userEntityService.updateEmail(username,usernameDetailDTO);
     }
@@ -48,5 +48,4 @@ public record UserController(
     public void deleteProfileAvatar(@PathVariable String username) {
         userEntityService.deleteProfileAvatar(username);
     }
-
 }

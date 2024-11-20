@@ -1,9 +1,8 @@
 package com.cromxt.user.service;
 
-import com.cromxt.cromspace.dtos.UserResponse;
-import com.cromxt.cromspace.dtos.UserValidationDTO;
+import com.cromxt.user.dtos.requests.UserCredential;
+import com.cromxt.user.dtos.responses.UserResponse;
 
 public interface AuthorizationService {
-    Boolean isRequestValid(UserValidationDTO userValidationDTO);
-    UserResponse getUserDetails(String token);
+    UserResponse getUserDetails(UserCredential userCredential);
 }

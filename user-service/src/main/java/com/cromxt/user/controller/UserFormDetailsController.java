@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/form/values")
+@RequestMapping(value = "/form")
 public record UserFormDetailsController(
         UserEntityService userEntityService
 ) {
@@ -34,8 +34,8 @@ public record UserFormDetailsController(
                 ));
     }
 
-    @GetMapping(value = "/validate/{email}")
-    public ResponseEntity<Boolean> isUsernameValid(@PathVariable String email) {
-        return ResponseEntity.ok(userEntityService.isValidUsername(email));
+    @GetMapping(value = "/validate/{username}")
+    public ResponseEntity<Boolean> isUsernameValid(@PathVariable String username) {
+        return ResponseEntity.ok(userEntityService.isValidUsername(username));
     }
 }

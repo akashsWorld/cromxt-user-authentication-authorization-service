@@ -1,10 +1,13 @@
 package com.cromxt.user.controller;
 
 
-import com.cromxt.cromspace.dtos.UserResponse;
-import com.cromxt.cromspace.dtos.UserValidationDTO;
+import com.cromxt.user.dtos.requests.UserCredential;
+import com.cromxt.user.dtos.responses.UserResponse;
+import com.cromxt.user.exceptions.UnauthorizedAPIKeyException;
 import com.cromxt.user.service.AuthorizationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,27 +16,17 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ValidationController{
 
-        private final AuthorizationService authorizationService;
-        private static final String API_KEY = "cromspace";
-
+    private final AuthorizationService authorizationService;
+    @Value("${USER_SERVICE.API_KEY}")
+    private String API_KEY;
 
 
     @PostMapping
-    public ResponseEntity<Boolean> isUserValid(@RequestBody UserValidationDTO userValidationDTO,
-                                               @RequestHeader(value = "X-API-KEY") String key) {
-        if(key == null || !key.equals(API_KEY)) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(authorizationService.isRequestValid(userValidationDTO));
-    }
-
-    @GetMapping
-    public ResponseEntity<UserResponse> getUserDetails(@RequestHeader(value = "Authorization") String token ,
+    public ResponseEntity<UserResponse> getUserDetails(@RequestBody UserCredential credential ,
                                                        @RequestHeader(value = "X-API-KEY") String key) {
         if(key == null || !key.equals(API_KEY)) {
-            return ResponseEntity.notFound().build();
+            throw new UnauthorizedAPIKeyException("Unauthorized API Key");
         }
-
-        return ResponseEntity.ok(authorizationService.getUserDetails(token));
+        return ResponseEntity.ok(authorizationService.getUserDetails(credential));
     }
 }

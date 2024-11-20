@@ -4,11 +4,11 @@
 - [x] Register User
 - [x] Update User
 - [x] Update Email
-- [ ] Update Password
-- [ ] Get all Genders
-- [ ] Get all the Country code.
-- [ ] Update recovery details.
-- [ ] Add Profile picture.
+- [x] Update Password
+- [x] Get all Genders
+- [x] Get all the Country code.
+- [x] Update recovery details.
+- [x] Add Profile picture.
 - [ ] Update profile picture.
 - [ ] Delete profile picture.
 ## Admin Controller:->
@@ -20,8 +20,3 @@
 - [ ] Delete List of Users.
 ## API Controller:->
 
-[//]: # (- [ ] Get User.)
-
-[//]: # (- [ ] G)
-
-[//]: # (- [ ] Is Token valid.)
