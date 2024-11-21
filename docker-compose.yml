@@ -1,4 +1,18 @@
+
 services:
+  user-service:
+    image: akashvai/user-authentication-authorization-service:latest
+    container_name: user-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - USER_SERVICE.PORT=8888
+    ports:
+      - "9532:8888"
+    networks:
+      - user-service-network
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:17.0-alpine3.20
     container_name: postgres
@@ -7,6 +21,12 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
+    networks:
+      - user-service-network
+
+networks:
+  user-service-network:
+    driver: bridge
 
 # Currently cache is not needed. But in future to implement Bloom filter for username validity check we need to implement cache.
 

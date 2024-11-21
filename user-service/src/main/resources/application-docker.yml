@@ -1,0 +1,31 @@
+USER_SERVICE:
+  DATABASE_USERNAME: "${DATABASE_USERNAME:admin}"
+  DATABASE_PASSWORD: "${DATABASE_PASSWORD:password}"
+  DATABASE_HOSTNAME: "${DATABASE_HOSTNAME:postgres}"
+  DATABASE_PORT: "${DATABASE_PORT:5432}"
+  DATABASE: "${DATABASE_NAME:postgres}"
+  SERVER_PORT: "${SERVER_PORT:9532}"
+  SECRET_KEY: "${SECRET_KEY:cromxt}"
+  EXPIRATION: "${EXPIRATION:900000}"
+  REFRESH_EXPIRATION: "${REFRESH_EXPIRATION:1296000000}"
+  API_KEY: "${API_KEY:cromxt}"
+  IS_SECURE: "${IS_SECURE:false}"
+server:
+  port: "${USER_SERVICE.SERVER_PORT}"
+  servlet:
+    context-path: "/cromxt"
+spring:
+  application:
+    name: user
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${USER_SERVICE.DATABASE_USERNAME}
+    password: ${USER_SERVICE.DATABASE_PASSWORD}
+    url: jdbc:postgresql://${USER_SERVICE.DATABASE_HOSTNAME}:${USER_SERVICE.DATABASE_PORT}/${USER_SERVICE.DATABASE}
+  jpa:
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 15MB
