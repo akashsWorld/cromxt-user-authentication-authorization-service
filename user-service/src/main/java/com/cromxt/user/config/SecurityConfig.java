@@ -1,11 +1,15 @@
 package com.cromxt.user.config;
 
 
+import com.cromxt.user.filter.APIKeyAuthorizationFilter;
+import com.cromxt.user.filter.AccessTokenAuthorizationFilter;
+import com.cromxt.user.filter.RefreshTokenAuthorizationFilter;
 import com.cromxt.user.repository.TokenRepository;
 import com.cromxt.user.service.JWTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,7 +26,7 @@ public class SecurityConfig {
     private static final String[] WHITE_LIST_URL = {
             "/auth/**",
             "/form/**",
-            "/validate",
+            "/service/**",
             "/users/**",
 //            "/**" /* Remove this on the production. */
     };
@@ -34,8 +38,9 @@ public class SecurityConfig {
             HttpSecurity http,
             JWTService jwtService,
             UserDetailsService userDetailsService,
-            TokenRepository tokenRepository
-    ) throws Exception {
+            TokenRepository tokenRepository,
+            Environment environment
+            ) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
@@ -48,6 +53,7 @@ public class SecurityConfig {
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new RefreshTokenAuthorizationFilter(jwtService,userDetailsService,tokenRepository), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new AccessTokenAuthorizationFilter(jwtService), RefreshTokenAuthorizationFilter.class)
+                .addFilterBefore(new APIKeyAuthorizationFilter(environment.getProperty("USER_SERVICE.API_KEY")), AccessTokenAuthorizationFilter.class)
                 .authenticationProvider(authenticationProvider);
         return http.build();
     }

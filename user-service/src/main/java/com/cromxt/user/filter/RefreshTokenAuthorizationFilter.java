@@ -1,4 +1,4 @@
-package com.cromxt.user.config;
+package com.cromxt.user.filter;
 
 import com.cromxt.user.repository.TokenRepository;
 import com.cromxt.user.service.JWTService;

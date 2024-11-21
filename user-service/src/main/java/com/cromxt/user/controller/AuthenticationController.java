@@ -8,6 +8,7 @@ import com.cromxt.user.service.UserEntityService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,7 +20,8 @@ import java.io.IOException;
 @RequestMapping(value = "/auth")
 public record AuthenticationController(
         UserEntityService userEntityService,
-        AuthenticationService authenticationService
+        AuthenticationService authenticationService,
+        Environment environment
 ) {
 
     @PostMapping(value = "/register")
@@ -32,7 +34,10 @@ public record AuthenticationController(
             @RequestBody UserCredential userCredential,
             HttpServletResponse httpServletResponse) throws ServletException, IOException {
        var token = authenticationService.authenticate(userCredential);
-       Cookie cookie = AuthenticationService.generateCookie(token.get("refreshToken"));
+       Cookie cookie = AuthenticationService.generateCookie(
+               token.get("refreshToken"),
+               Boolean.parseBoolean(environment.getProperty("USER_SERVICE.IS_SECURE")));
+
        httpServletResponse.addCookie(cookie);
        return ResponseEntity.ok(new AuthenticationResponseDTO(token.get("accessToken")));
     }

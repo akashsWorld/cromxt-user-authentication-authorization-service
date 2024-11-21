@@ -75,8 +75,20 @@ public class AuthenticationAndAuthorizationServiceImpl implements Authentication
         tokenRepository.save(token);
     }
 
+
+
+
     @Override
-    public UserResponse getUserDetails(String username) {
+    public UserResponse getUserDetails(UserCredential userCredential) {
+
+        final String username = userCredential.username();
+//        TODO: Enable Later
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        username,
+                        userCredential.password()
+                )
+        );
         UserEntity user = userEntityRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
 //        If necessary then add more details.

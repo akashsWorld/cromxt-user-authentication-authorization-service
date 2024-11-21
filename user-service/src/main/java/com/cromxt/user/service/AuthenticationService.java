@@ -11,11 +11,11 @@ public interface AuthenticationService {
     Map<String,String> authenticate(UserCredential request);
     Map<String,String> generateRefreshToken(String username);
     String generateAccessToken(String token);
-    static Cookie generateCookie(String token) {
+    static Cookie generateCookie(String token,Boolean isSecure) {
         Cookie cookie = new Cookie("refreshToken",token);
         cookie.setHttpOnly(true);
 //       TODO:Change it Later.
-        cookie.setSecure(false);
+        cookie.setSecure(isSecure);
         cookie.setPath("/cromxt/tokens/refresh");
         cookie.setMaxAge(3600);
         return cookie;

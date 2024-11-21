@@ -2,8 +2,9 @@ package com.cromxt.user.exceptions.handlers;
 
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalHandlers {
 
 

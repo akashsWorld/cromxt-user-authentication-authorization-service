@@ -1,5 +1,6 @@
 package com.cromxt.user.exceptions;
 
+
 public class UnauthorizedAPIKeyException extends RuntimeException{
 
     public UnauthorizedAPIKeyException() {

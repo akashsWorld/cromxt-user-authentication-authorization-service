@@ -12,8 +12,6 @@ import com.cromxt.user.service.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -96,7 +94,7 @@ public class UserServiceImpl implements UserEntityService {
     @Transactional
     public void updateProfileImage(String username, MultipartFile profileImage) {
         if(!ALLOWED_FILE_EXTENSIONS.contains(profileImage.getContentType())){
-            throw new ImageTypeNotValidException("Invalid image type: " + profileImage.getContentType());
+            throw new InvalidImageFormat("Invalid image type: " + profileImage.getContentType());
         }
         UserEntity userEntity = userEntityRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));

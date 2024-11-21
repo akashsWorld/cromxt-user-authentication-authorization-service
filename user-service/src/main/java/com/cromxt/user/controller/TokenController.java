@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,8 @@ import java.util.Map;
 @RequestMapping(value = "/tokens")
 public record TokenController(
         JWTService jwtService,
-        AuthenticationService authenticationService
+        AuthenticationService authenticationService,
+        Environment environment
 ) {
     @PostMapping
     public ResponseEntity<AuthenticationResponseDTO> refreshAccessToken(HttpServletRequest request, HttpServletResponse httpServletResponse) throws ServletException, IOException {
@@ -30,7 +32,9 @@ public record TokenController(
     public ResponseEntity<AuthenticationResponseDTO> renewRefreshToken(HttpServletRequest request, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String token = request.getHeader("refreshToken");
         Map<String,String>  tokens = authenticationService.generateRefreshToken(jwtService.extractUsername(token));
-        Cookie cookie = AuthenticationService.generateCookie(tokens.get("refreshToken"));
+        Cookie cookie = AuthenticationService.generateCookie(
+                tokens.get("refreshToken"),
+                Boolean.parseBoolean(environment.getProperty("USER_SERVICE.IS_SECURE")));
         httpServletResponse.addCookie(cookie);
         return ResponseEntity.ok(new AuthenticationResponseDTO(tokens.get("accessToken")));
     }
