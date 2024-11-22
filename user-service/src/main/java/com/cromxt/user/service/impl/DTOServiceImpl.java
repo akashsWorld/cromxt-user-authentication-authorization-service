@@ -23,7 +23,7 @@ public class DTOServiceImpl implements DTOService {
     private final PasswordEncoder passwordEncoder;
 
     private static final Map<String, Gender> ALLOWED_GENDERS = Arrays.stream(Gender.values()).collect(Collectors.toMap(
-            Gender::getGender,gender-> Gender.valueOf(gender.name())
+            gender -> gender.getGender().toUpperCase(),gender-> Gender.valueOf(gender.name())
     ));
     private static final Map<String, CountryCode> ALLOWED_COUNTRY_CODE = Arrays.stream(CountryCode.values()).collect(Collectors.toMap(
             CountryCode::getCode,country->CountryCode.valueOf(country.name())
