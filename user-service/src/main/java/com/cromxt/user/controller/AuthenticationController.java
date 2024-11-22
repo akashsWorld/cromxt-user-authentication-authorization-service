@@ -8,6 +8,7 @@ import com.cromxt.user.service.UserEntityService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,12 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping(value = "/auth")
-public record AuthenticationController(
-        UserEntityService userEntityService,
-        AuthenticationService authenticationService,
-        Environment environment
-) {
+@RequiredArgsConstructor
+public class AuthenticationController{
+
+    private final UserEntityService userEntityService;
+    private final AuthenticationService authenticationService;
+    private final Environment environment;
 
     @PostMapping(value = "/register")
     @ResponseStatus(HttpStatus.CREATED)
