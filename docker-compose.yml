@@ -5,7 +5,7 @@ services:
     container_name: user-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - USER_SERVICE.PORT=8888
+      - USER_SERVICE.SERVER_PORT=8888
     ports:
       - "9532:8888"
     networks:
