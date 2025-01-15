@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,15 +15,15 @@
     <h1 class="text-heading__small align-text__center">Welcome to <span class="text-color__primary">Cromxt Distributed </span>Services</h1>
     <div class="flex-row section-container">
         <div class="form-container flex-column">
-            <h2 class="text-title__large text-color__secondary">User Login</h2>
-            <form action="/auth/authenticate" method="POST" class="form">
-                <div class="input-group">
+            <h2 class="text-title__large text-color__secondary">Sign In</h2>
+            <form th:action="@{${baseUrl}/auth/authenticate(redirectUrl=${redirectUrl})}" method="POST" class="form">
+                <div class="input">
                     <label class="text-title__small" for="username">Email Or Username</label>
                     <div class="flex-row" >
                         <input class="text-paragraph" type="text" placeholder="Email Or Username" name="username" id="username" required minlength="5">
                     </div>
                 </div>
-                <div class="input-group">
+                <div class="input">
                     <label class="text-title__small" for="password">Password</label>
                     <div class="flex-row">
                         <input class="text-paragraph" type="text" name="username" id="password" placeholder="&%qufbhhbfj$#" required minlength="8">
