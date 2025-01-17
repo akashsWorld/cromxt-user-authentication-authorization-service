@@ -33,16 +33,26 @@ $('#toggle-confirm-password').click(function () {
     }
 });
 
-$('register-form').on('submit',(form)=>{
+$('#register-form').submit(function (form){
     form.preventDefault();
+    const avatar = $('#avatar').files[0];
+    console.log(avatar);
+    if(!avatar){
+        $('#avatar-preview').addClass('error');
+        return;
+    }
     const password = $('#password').val();
     const confirmPassword = $('#confirm-password').val();
-    console.log("password: "+password+" confirmPassword: "+confirmPassword);
-    if(password !== confirmPassword){
-        $('password_input').style.border = '1px solid red';
-        $('confirm_password_input').style.border = '1px solid red';
-    }else {
+    console.log(password, confirmPassword);
+    if (password !== confirmPassword) {
+        password.addClass('error');
+        confirmPassword.addClass('error');
+
+        confirmPassword.focus();
+        password.focus();
+    }else{
         form.submit();
     }
 })
+
 

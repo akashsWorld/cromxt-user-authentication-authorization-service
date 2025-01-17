@@ -11,9 +11,19 @@
     <script src="/js/script.js" defer></script>
 </head>
 <body>
+<header>
+    <nav>
+        <div class="logo-container">
+            <a href="/" class="logo">Cromxt</a>
+        </div>
+        <div>
+            <a href="/auth/find-account" class="button__primary">Find Account <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </nav>
+</header>
 <div class="content-box">
-    <h1 class="text-heading__small align-text__center heading">Join our <span
-            class="text-color__primary">Services</span></h1>
+    <h1 class="text-heading__small align-text__center heading">Join <span
+            class="text-color__primary">Us</span></h1>
     <div class="flex-row section-container">
         <div class="form-container flex-column">
             <h2 class="text-title__large text-color__secondary">Sign Up</h2>
@@ -21,21 +31,20 @@
                 <div class="file-input">
                     <div id="avatar-preview" class="avatar-preview">
                         <span id="camera-icon" class="icon"><i class="fa-solid fa-camera"></i></span>
-                        <label for="avatar" style="width: 100%; height: 100%; z-index: 10"></label>
+                        <input type="file"  id="avatar" name="avatar" required/>
                     </div>
-                    <input type="file"  id="avatar" name="avatar" required/>
                     <label class="text-paragraph" for="avatar">Upload Avatar</label>
                 </div>
                 <div class="flex-row input-groups">
                     <div class="input">
-                        <label class="text-title__small" for="Username">Username</label>
+                        <label class="input-label" for="Username">Username</label>
                         <div class="flex-row">
                             <input class="text-paragraph" type="text" placeholder="akashbis890" name="username"
                                    id="Username" required minlength="5"/>
                         </div>
                     </div>
                     <div class="input">
-                        <label class="text-title__small" for="email">Email</label>
+                        <label class="input-label" for="email">Email</label>
                         <div class="flex-row">
                             <input class="text-paragraph" type="text" placeholder="Username" name="Email"
                                    id="email" required minlength="5"/>
@@ -45,14 +54,14 @@
                 </div>
                 <div class="flex-row input-groups">
                     <div class="input">
-                        <label class="text-title__small" for="FirstName">First Name</label>
+                        <label class="input-label" for="FirstName">First Name</label>
                         <div class="flex-row">
                             <input class="text-paragraph" type="text" placeholder="John" name="firstName"
                                    id="FirstName" required minlength="3"/>
                         </div>
                     </div>
                     <div class="input">
-                        <label class="text-title__small" for="LastName">Last Name</label>
+                        <label class="input-label" for="LastName">Last Name</label>
                         <div class="flex-row">
                             <input class="text-paragraph" type="text" placeholder="Doe" name="lastName"
                                    id="LastName" required minlength="3"/>
@@ -61,14 +70,14 @@
                 </div>
                 <div class="flex-row input-groups">
                     <div class="input">
-                        <label class="text-title__small" for="dateofbirth">Date of Birth</label>
+                        <label class="input-label" for="birthdate">Date of Birth</label>
                         <div class="flex-row">
                             <input class="text-paragraph" type="date" value="1999-11-27" name="dateOfBirth"
-                                   id="dateofbirth" required minlength="5"/>
+                                   id="birthdate" required minlength="5"/>
                         </div>
                     </div>
                     <div class="input">
-                        <label class="text-title__small" for="Gender">Gender</label>
+                        <label class="input-label" for="Gender">Gender</label>
                         <div class="flex-row">
                             <select class="text-paragraph"  name="gender"
                                     id="Gender" required>
@@ -82,7 +91,7 @@
                 </div>
                 <div class="flex-row input-groups">
                     <div id="password_input" class="input">
-                        <label class="text-title__small" for="password">Password</label>
+                        <label class="input-label" for="password">Password</label>
                         <div class="flex-row">
                             <input class="text-paragraph" type="text" name="password" id="password"
                                    placeholder="&%qufbhhbfj$#" required minlength="8">
@@ -90,7 +99,7 @@
                         </div>
                     </div>
                     <div id="confirm_password_input" class="input">
-                        <label class="text-title__small" for="confirm-password">Confirm Password</label>
+                        <label class="input-label" for="confirm-password">Confirm Password</label>
                         <div class="flex-row">
                             <input class="text-paragraph" type="text" name="confirmPassword" id="confirm-password"
                                    placeholder="&%qufbhhbfj$#" required minlength="8">
@@ -100,7 +109,7 @@
                 </div>
 
                 <input id="signup" type="submit" value="Sign up" class="button__primary"/>
-                <a href="/accounts/login" class="button__secondary">Already have an account? Sign-in <i
+                <a href="/auth/login" class="button__secondary">Already have an account? Sign-in <i
                         class="fas fa-arrow-right"></i></a>
             </form>
 

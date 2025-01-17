@@ -1,4 +1,4 @@
-USER_SERVICE_BASE_URL: "user-service"
+USER_SERVICE_CONFIG_BASE_URL: "user-service"
 spring:
   application:
     name: user-service
@@ -11,5 +11,11 @@ spring:
     hibernate:
       ddl-auto: update
     open-in-view: false
+  web:
+    resources:
+      static-locations: "classpath:/public, classpath:/static"
 server:
   port: 8501
+  error:
+    whitelabel:
+      enabled: false
