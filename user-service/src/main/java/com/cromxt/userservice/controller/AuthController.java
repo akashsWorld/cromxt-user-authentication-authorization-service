@@ -18,19 +18,24 @@ public class AuthController {
     private final String BASE_URL;
 
     public AuthController(Environment environment){
-        this.BASE_URL = environment.getProperty("USER_SERVICE_CONFIG_BASE_URL",String.class);
+        String contextPath = environment.getProperty("server.servlet.context-path",String.class);
+        if (contextPath == null) {
+            BASE_URL = "";
+        } else {
+            BASE_URL = contextPath;
+        }
     }
 
     @GetMapping(value = {"/sign-in","/", ""}, produces = "text/html")
     public String signIn(
-            @RequestParam(name = "continueTo", required = true) String continueTo,
+            @RequestParam(name = "continueTo", required = false) String continueTo,
             Model model
             ) {
         model.addAttribute("redirectUrl", continueTo);
         model.addAttribute("baseUrl",BASE_URL);
         return "sign-in";
     }
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/sign-in", produces = "text/html")
     public String authenticate(
             @ModelAttribute UserCredentialDTO userCredentialDTO,
             @RequestParam(required = false) String redirectTo,
@@ -51,7 +56,8 @@ public class AuthController {
     }
 
     @GetMapping("/find-account")
-    public String findAccount() {
+    public String findAccount(Model model) {
+        model.addAttribute("baseUrl", BASE_URL);
         return "find-account";
     }
 }
