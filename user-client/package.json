@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build --outDir ../user-service/src/main/resources/public",
+    "build": "tsc -b && vite build --outDir ../user-service/src/main/resources/accounts",
     "lint": "eslint .",
     "preview": "vite preview"
   },

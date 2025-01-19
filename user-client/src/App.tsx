@@ -1,10 +1,22 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    console.log('App mounted');
+    const token = sessionStorage.getItem('Authrization');
+    if(!token){
+      console.log('No token found');
+      window.location.href = 'http://localhost:8501/auth/sign-in';
+    }
+    else{
+      console.log('Token found');
+    }
+  },[]);
 
   return (
     <>

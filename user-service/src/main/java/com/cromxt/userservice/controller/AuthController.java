@@ -5,6 +5,8 @@ import com.cromxt.userservice.dtos.requests.NewUserRequest;
 import com.cromxt.userservice.dtos.requests.UserCredentialDTO;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +15,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/auth")
 public class AuthController {
 
+    private final String BASE_URL;
+
+    public AuthController(Environment environment){
+        this.BASE_URL = environment.getProperty("USER_SERVICE_CONFIG_BASE_URL",String.class);
+    }
+
     @GetMapping(value = {"/sign-in","/", ""}, produces = "text/html")
     public String signIn(
-            @RequestParam(name = "continueTo", required = false) String continueTo,
-            Model model) {
-        String baseUrl = System.getProperty("USER_SERVICE_BASE_URL");
+            @RequestParam(name = "continueTo", required = true) String continueTo,
+            Model model
+            ) {
         model.addAttribute("redirectUrl", continueTo);
-        model.addAttribute("baseUrl",baseUrl);
+        model.addAttribute("baseUrl",BASE_URL);
         return "sign-in";
     }
     @PostMapping(value = "/login")
