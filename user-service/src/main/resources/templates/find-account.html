@@ -1,36 +1,73 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" th:lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" th:href="${baseUrl}+'/css/style.css'">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-          integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" th:href="${baseUrl}+'/css/style.css'" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <script th:src="${baseUrl}+'/js/jquery-3.7.1.min.js'" defer></script>
-    <script th:src="${baseUrl}+'/js/find-account.js'"></script>
+    <script th:src="${baseUrl}+'/js/find-account.js'" defer></script>
     <title>Find Account | CROMXT Distributed Systems</title>
-</head>
-<body>
-
-<header>
-    <nav>
+  </head>
+  <body>
+    <header>
+      <nav>
         <div class="logo-container">
-            <a th:href="${homeUrl}" class="logo">Cromxt</a>
+          <a th:href="${homeUrl}" class="logo">Cromxt</a>
         </div>
         <div>
-            <a th:href="${baseUrl}+'/auth/sign-in'" class="button__primary">Sign-in <i class="fas fa-arrow-right"></i></a>
+          <a th:href="${baseUrl}+'/auth/sign-in'" class="button__primary"
+            >Sign-in <i class="fas fa-arrow-right"></i
+          ></a>
         </div>
-    </nav>
-</header>
+      </nav>
+    </header>
 
-<main>
-    <div class="content-box">
-        <h1 class="text-heading__small align-text__center">
-            Find Your Account
-        </h1>
-    </div>
-</main>
-
-</body>
+    <main>
+      <div class="content-box">
+        <div class="flex-row section-container">
+          <div class="flex-row form-container">
+            <form id="find-account-form" method="post" th:action="${baseUrl}+'/auth/find-account'" class="flex-column form-container">
+                <h2 class="text-title__large text-color__secondary">
+                    Find Account
+                  </h2>
+                <div class="input">
+                    <label class="input-label" for="find-account"
+                      >Enter your Email</label
+                    >
+                    <div class="flex-row">
+                      <input
+                        class="text-paragraph"
+                        type="email"
+                        name="accountEmail"
+                        id="account-email"
+                        placeholder="abc@email.com"
+                        required
+                        minlength="8"
+                      />
+                      <span onclick="" class="icon"
+                        ><i class="fa-solid fa-magnifying-glass"></i
+                      ></span>
+                    </div>
+                  </div>
+            </form>
+          </div>
+          <div class="image-container">
+            <img
+              alt="Login"
+              style="width: 100%"
+              class="illustration"
+              th:src="${baseUrl}+'/assets/login.svg'"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>

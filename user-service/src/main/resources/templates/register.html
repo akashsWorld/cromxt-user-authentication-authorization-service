@@ -27,7 +27,7 @@
     <div class="flex-row section-container">
         <div class="form-container flex-column">
             <h2 class="text-title__large text-color__secondary">Sign Up</h2>
-            <form th:action="@{${baseUrl}/auth/save-user(redirectUrl=${redirectUrl})}" method="POST" id="register-form" class="form">
+            <form th:action="@{${baseUrl+'/auth/register'}(redirectUrl=${redirectUrl})}" method="post" id="register-form" class="form">
                 <div class="file-input">
                     <div id="avatar-preview" class="avatar-preview">
                         <span id="camera-icon" class="icon"><i class="fa-solid fa-camera"></i></span>
@@ -46,7 +46,7 @@
                     <div class="input">
                         <label class="input-label" for="email">Email</label>
                         <div class="flex-row">
-                            <input class="text-paragraph" type="text" placeholder="Username" name="Email"
+                            <input class="text-paragraph" type="text" placeholder="Username" name="email"
                                    id="email" required minlength="5"/>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                             <select class="text-paragraph"  name="gender"
                                     id="Gender" required>
                                 <option value="MALE">MALE</option>
-                                <option value="None">NONE</option>
+                                <option selected value="None">NONE</option>
                                 <option value="FEMALE">FEMALE</option>
                             </select>
                         </div>
@@ -93,15 +93,15 @@
                     <div id="password_input" class="input">
                         <label class="input-label" for="password">Password</label>
                         <div class="flex-row">
-                            <input class="text-paragraph" type="text" name="password" id="password"
+                            <input class="text-paragraph" type="password" name="password" id="password"
                                    placeholder="&%qufbhhbfj$#" required minlength="8">
                             <span class="icon" id="toggle-password"><i class="fa-regular fa-eye"></i></span>
                         </div>
                     </div>
-                    <div id="confirm_password_input" class="input">
+                    <div class="input">
                         <label class="input-label" for="confirm-password">Confirm Password</label>
-                        <div class="flex-row">
-                            <input class="text-paragraph" type="text" name="confirmPassword" id="confirm-password"
+                        <div id="confirm-password_input-box" class="flex-row">
+                            <input class="text-paragraph" type="password" id="confirm-password"
                                    placeholder="&%qufbhhbfj$#" required minlength="8">
                             <span class="icon" id="toggle-confirm-password"><i class="fa-regular fa-eye"></i></span>
                         </div>

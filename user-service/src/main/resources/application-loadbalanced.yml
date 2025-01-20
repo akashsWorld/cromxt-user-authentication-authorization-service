@@ -1,12 +1,4 @@
-USER_CONFIG_CROMXT_HOME: http://localhost:8500
 spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 10MB
-      file-size-threshold: 10MB
-      max-request-size: 12 MB
-        
   application:
     name: user-service
   datasource:
@@ -24,8 +16,7 @@ spring:
       static-locations:
       - classpath:/static
 server:
-  port: 8501
+  port: 8888
   error:
     whitelabel:
       enabled: false
-

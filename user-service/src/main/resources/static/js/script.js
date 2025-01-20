@@ -33,25 +33,30 @@ $('#toggle-confirm-password').click(function () {
     }
 });
 
-$('#register-form').submit(function (form){
+$('#register-form').submit(async function (form){
     form.preventDefault();
-    const avatar = $('#avatar').files[0];
+    const avatar = $('#avatar')
     console.log(avatar);
     if(!avatar){
         $('#avatar-preview').addClass('error');
         return;
     }
-    const password = $('#password').val();
-    const confirmPassword = $('#confirm-password').val();
-    console.log(password, confirmPassword);
-    if (password !== confirmPassword) {
-        password.addClass('error');
-        confirmPassword.addClass('error');
-
+    const password = $('#password');
+    const confirmPassword = $('#confirm-password');
+    if (password.val() !== confirmPassword.val()) {
+        $('#confirm-password_input-box').addClass('error');
         confirmPassword.focus();
-        password.focus();
     }else{
-        form.submit();
+        const formData = new FormData(this);
+        const url  = this.action
+
+        const response = await fetch(url,{
+            method:'POST',
+            body:formData,
+        })
+        if(response.redirected===true){
+            window.location.href=response.url;
+        }
     }
 })
 

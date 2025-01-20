@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account List</title>
+    <link rel="stylesheet" th:href="@{${baseUrl}+'/css/style.css'}" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo-container">
+          <a th:href="${homeUrl}" class="logo">Cromxt</a>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="content-box flex-column">
+        <h2 class="text-title__small text-color__primary">Account List</h2>
+        <div class="account-list flex-column">
+          <p th:unless="${#lists.size(accounts)>0}">
+            No accounts found with this email
+          </p>
+          <div th:each="account :${accounts}" class="flex-row account-card">
+            <a
+              class="card-avatar"
+              th:href="@{${baseUrl + '/auth/sign-in'}(continueTo=${redirectUrl},username=${account.username})}"
+            >
+              <img th:src="${account.avatar}" alt="${account.username}" />
+            </a>
+            <a
+              th:href="@{${baseUrl + '/auth/sign-in'}(continueTo=${redirectUrl},username=${account.username})}"
+              class="card-name text-color__secondary"
+              th:text="${account.username}"
+            ></a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
