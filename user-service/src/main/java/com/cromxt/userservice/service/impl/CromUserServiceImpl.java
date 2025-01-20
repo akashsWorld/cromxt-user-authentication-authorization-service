@@ -6,11 +6,19 @@ import org.springframework.stereotype.Service;
 
 import com.cromxt.userservice.dtos.requests.NewUserRequest;
 import com.cromxt.userservice.dtos.response.UserAccountResponse;
+import com.cromxt.userservice.entity.CromUser;
+import com.cromxt.userservice.repository.CromUserRepository;
 import com.cromxt.userservice.service.CromUserService;
+import com.cromxt.userservice.service.DTOEntityMapper;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CromUserServiceImpl implements CromUserService{
 
+    private final CromUserRepository cromUserRepository;
+    private final DTOEntityMapper dtoEntityMapper;
     @Override
     public List<UserAccountResponse> findUsersByEmail(String email) {
         // return List.of(
@@ -22,7 +30,8 @@ public class CromUserServiceImpl implements CromUserService{
 
     @Override
     public void saveUser(NewUserRequest newUser) {
-        
+        CromUser newCromUser = dtoEntityMapper.getCromUser(newUser);
+        cromUserRepository.save(newCromUser);
     }
 
 }

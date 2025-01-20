@@ -2,10 +2,16 @@ package com.cromxt.userservice.controller;
 
 import com.cromxt.userservice.dtos.requests.NewUserRequest;
 import com.cromxt.userservice.dtos.requests.UserCredentialDTO;
+import com.cromxt.userservice.entity.Gender;
 import com.cromxt.userservice.service.CromUserService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -64,6 +70,8 @@ public class AuthController {
         continueTo = continueTo == null ? HOME_URL : continueTo;
         model.addAttribute("baseUrl", BASE_URL);
         model.addAttribute("continueTo", continueTo);
+        List<String> genderList = Arrays.stream(Gender.values()).map(eachValue->eachValue.getName()).collect(Collectors.toList());
+        model.addAttribute("genders", genderList);  
         return "register";
     }
 
@@ -72,10 +80,9 @@ public class AuthController {
             @ModelAttribute NewUserRequest newUser,
             @RequestParam(required = false) String continueTo,
             Model model) {
-                System.out.println(newUser);
         continueTo = continueTo == null ? HOME_URL : continueTo;
         model.addAttribute("baseUrl", BASE_URL);
-        model.addAttribute("continueTo", continueTo);
+        model.addAttribute("continueTo", continueTo);  
         cromUserService.saveUser(newUser);
         return "redirect:/auth";
     }

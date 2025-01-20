@@ -22,8 +22,6 @@
     </nav>
 </header>
 <div class="content-box">
-    <h1 class="text-heading__small align-text__center heading">Join <span
-            class="text-color__primary">Us</span></h1>
     <div class="flex-row section-container">
         <div class="form-container flex-column">
             <h2 class="text-title__large text-color__secondary">Sign Up</h2>
@@ -78,12 +76,11 @@
                     </div>
                     <div class="input">
                         <label class="input-label" for="Gender">Gender</label>
-                        <div class="flex-row">
-                            <select class="text-paragraph"  name="gender"
+                        <div class="flex-row" id="gender-input">
+                            <select class="text-paragraph" name="gender"
                                     id="Gender" required>
-                                <option value="MALE">MALE</option>
-                                <option selected value="None">NONE</option>
-                                <option value="FEMALE">FEMALE</option>
+                                <option th:each="gender : ${genders}" th:value="${gender}" th:text="${gender}"></option>
+                                <option disabled selected value="None">NONE</option>
                             </select>
                         </div>
                     </div>

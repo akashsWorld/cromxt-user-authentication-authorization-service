@@ -18,9 +18,10 @@
       <div class="content-box flex-column">
         <h2 class="text-title__small text-color__primary">Account List</h2>
         <div class="account-list flex-column">
-          <p th:unless="${#lists.size(accounts)>0}">
-            No accounts found with this email
-          </p>
+          <p class="text-paragraph">No accounts found with this email</p>
+          <a th:href="${baseUrl}+'/auth/register'" class="text-paragraph text-color__secondary" th:unless="${#lists.size(accounts)>0}">
+            Create an account
+          </a>
           <div th:each="account :${accounts}" class="flex-row account-card">
             <a
               class="card-avatar"
