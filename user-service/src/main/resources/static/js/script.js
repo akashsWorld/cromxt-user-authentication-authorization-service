@@ -58,7 +58,7 @@ $("#register-form").submit(async function (form) {
   }
 
   const formData = new FormData(this);
-  formData.append("gender",gender.val());
+  // formData.append("gender",gender.val());
   const url = this.action;
 
   const response = await fetch(url, {

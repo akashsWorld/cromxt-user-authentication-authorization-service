@@ -26,14 +26,14 @@ public class DTOEntityMapperImpl implements DTOEntityMapper{
     public CromUser getCromUser(NewUserRequest newUser) {
         String encodedPassword = passwordEncoder.encode(newUser.password());
         String avatar = utilService.uploadFile(newUser.avatar());
-        log.info("The gender of the User ",newUser.gender());
+        
         return CromUser.builder()
                 .email(newUser.email())
                 .username(newUser.username())
                 .firstName(newUser.firstName())
                 .lastName(newUser.lastName())
                 .password(encodedPassword)
-                .gender(Gender.MALE)
+                .gender(Gender.valueOf(newUser.gender()))
                 .role(Role.USER)
                 .dateOfBirth(Date.valueOf(newUser.dateOfBirth()))
                 .avatar(avatar)

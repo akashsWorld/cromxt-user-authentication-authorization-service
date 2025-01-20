@@ -30,7 +30,7 @@
         </div>
         <div>
           <a
-            th:href="@{${baseUrl}+'/auth/find-account'}"
+            th:href="${baseUrl+'/auth/find-account'}"
             class="button__primary"
             >Find Account <i class="fas fa-arrow-right"></i
           ></a>
@@ -49,7 +49,7 @@
           <div class="form-container flex-column">
             <h2 class="text-title__large text-color__secondary">Sign In</h2>
             <form
-              th:action="@{${baseUrl}/auth/authenticate(redirectUrl=${redirectUrl})}"
+              th:action="@{${baseUrl + '/auth/sign-in'}(redirectUrl=${redirectUrl})}"
               method="POST"
               class="form"
             >

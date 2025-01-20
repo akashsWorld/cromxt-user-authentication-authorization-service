@@ -1,12 +1,20 @@
 package com.cromxt.userservice.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.cromxt.jwt.JWTService;
+import com.cromxt.userservice.dtos.others.Pair;
 import com.cromxt.userservice.dtos.requests.NewUserRequest;
+import com.cromxt.userservice.dtos.requests.UserCredentialDTO;
 import com.cromxt.userservice.dtos.response.UserAccountResponse;
 import com.cromxt.userservice.entity.CromUser;
+import com.cromxt.userservice.exception.InvalidUserCredentialsException;
 import com.cromxt.userservice.repository.CromUserRepository;
 import com.cromxt.userservice.service.CromUserService;
 import com.cromxt.userservice.service.DTOEntityMapper;
@@ -19,6 +27,8 @@ public class CromUserServiceImpl implements CromUserService{
 
     private final CromUserRepository cromUserRepository;
     private final DTOEntityMapper dtoEntityMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService;
     @Override
     public List<UserAccountResponse> findUsersByEmail(String email) {
         // return List.of(
@@ -32,6 +42,29 @@ public class CromUserServiceImpl implements CromUserService{
     public void saveUser(NewUserRequest newUser) {
         CromUser newCromUser = dtoEntityMapper.getCromUser(newUser);
         cromUserRepository.save(newCromUser);
+    }
+
+    @Override
+    public Map<String, Pair<String, Boolean>> authenticate(UserCredentialDTO userCredentialDTO) {
+        String username = userCredentialDTO.username();
+        String password = userCredentialDTO.password();
+        Optional<CromUser> cromUser = cromUserRepository.findByUsername(username);
+
+        CromUser savedUser = cromUser.orElseThrow(()-> new InvalidUserCredentialsException("User not found"));
+
+        boolean isValidPassword = passwordEncoder.matches(password, savedUser.getPassword());
+
+        if(!isValidPassword){
+            throw new InvalidUserCredentialsException("Invalid user credentials");
+        }
+        Map<String, Pair<String,Boolean>> cookies = new HashMap<>();
+
+        String accessToken = jwtService.generateAccessToken(savedUser, new HashMap<>());
+        String refreshToken = jwtService.generateRefreshToken(savedUser);
+        
+        cookies.put("Refresh-Token", new Pair<>(refreshToken, true));
+        cookies.put("Authorization", new Pair<>(accessToken, true));
+        return cookies;
     }
 
 }
