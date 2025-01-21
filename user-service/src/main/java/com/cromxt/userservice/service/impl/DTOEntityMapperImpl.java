@@ -35,7 +35,7 @@ public class DTOEntityMapperImpl implements DTOEntityMapper{
                 .password(encodedPassword)
                 .gender(Gender.valueOf(newUser.gender()))
                 .role(Role.USER)
-                .dateOfBirth(Date.valueOf(newUser.dateOfBirth()))
+                .dateOfBirth(newUser.dateOfBirth())
                 .avatar(avatar)
                 .build();
     }

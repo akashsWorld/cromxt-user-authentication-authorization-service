@@ -1,11 +1,9 @@
 package com.cromxt.userservice.service.impl;
 
-import java.util.Map;
-
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cromxt.userservice.dtos.others.Pair;
 import com.cromxt.userservice.service.UtilService;
 
 import jakarta.servlet.http.Cookie;
@@ -13,6 +11,17 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class UtilServiceImpl implements UtilService {
+
+    private String BASE_URL;
+
+    public UtilServiceImpl(Environment environment) {
+        String contextPath = environment.getProperty("server.servlet.context-path", String.class);
+        if (BASE_URL == null) {
+            BASE_URL = "";
+        } else {
+            BASE_URL = String.format("/%s", contextPath);
+        }
+    }
 
     @Override
     public String uploadFile(MultipartFile file) {
@@ -23,12 +32,14 @@ public class UtilServiceImpl implements UtilService {
     }
 
     @Override
-    public void addCookies(HttpServletResponse response, Map<String, Pair<String, Boolean>> cookies) {
-        cookies.keySet().forEach((cookieName)->{
-            Cookie newCookie = new Cookie(cookieName, cookies.get(cookieName).getData1());
-            newCookie.setHttpOnly(cookies.get(cookieName).getData2());
+    public void addRefreshTokenCookie(
+        HttpServletResponse response, 
+        String refreshToken,
+        String refreshTokenEndpointPath) {
+            Cookie newCookie = new Cookie("Refresh-Token", refreshToken);
+            newCookie.setHttpOnly(true);
+            newCookie.setPath(String.format("%s%s", BASE_URL, refreshTokenEndpointPath));
             response.addCookie(newCookie);
-        });
     }
 
 }

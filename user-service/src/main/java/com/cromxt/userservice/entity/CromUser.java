@@ -15,6 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -56,6 +57,9 @@ public class CromUser implements UserDetails {
     private Date createdAt;
     @UpdateTimestamp
     private Date updatedAt;
+
+    @OneToOne(mappedBy = "cromUser")
+    private Tokens tokens;
 
 
     @Override
